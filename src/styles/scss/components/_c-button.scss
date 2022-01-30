@@ -1,0 +1,23 @@
+$component-name: 'c-button';
+
+.#{$component-name} {
+  width: min(30rem, 100%);
+  background: linear-gradient(90deg, $gradient-color-01, $gradient-color-02);
+  background-color: $primary;
+  font: $bold-small;
+  color: $white;
+  padding: 1rem;
+  border-radius: $border-radius;
+  border: 1px solid $primary;
+  transition: all 0.4s;
+
+  &:hover {
+    background: $white;
+    color: $primary;
+    border: 1px solid $primary;
+  }
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}

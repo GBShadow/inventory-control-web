@@ -1,0 +1,10 @@
+$component-name: 'l-form-session';
+
+.#{$component-name} {
+  width: min(100%, 352px);
+  padding: 3.2rem;
+  box-shadow: $shadow;
+  background-color: $white;
+  border-radius: $border-radius;
+  justify-self: flex-start;
+}

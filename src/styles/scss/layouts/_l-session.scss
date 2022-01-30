@@ -1,0 +1,34 @@
+$component-name: 'l-session';
+
+.#{$component-name} {
+  padding: 5%;
+  height: 100%;
+  width: 100%;
+  background-image: url('/images/waves.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left;
+
+  &__content {
+    width: min($width, 100%);
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    &__content {
+      display: flex;
+    }
+
+    &__hero {
+      display: none;
+    }
+  }
+
+  @media (max-width: 450px) {
+    background-size: cover;
+  }
+}
