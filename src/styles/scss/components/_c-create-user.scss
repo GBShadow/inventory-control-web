@@ -6,8 +6,12 @@ $component-name: 'c-create-user';
   align-items: center;
   gap: 1.6rem;
 
+  &__title {
+    font: $bold-medium;
+  }
+
   &__error {
-    color: var(--primary);
+    color: $error;
   }
 
   &__link {

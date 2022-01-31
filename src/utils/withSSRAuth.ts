@@ -1,7 +1,7 @@
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
-  GetServerSidePropsResult
+  GetServerSidePropsResult,
 } from 'next'
 import decode from 'jwt-decode'
 import { destroyCookie, parseCookies } from 'nookies'
@@ -20,14 +20,14 @@ export function withSSRAuth<P>(
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx)
-    const token = cookies['doesangue.nextauth.token']
+    const token = cookies['inventory-control.nextauth.token']
 
     if (!token) {
       return {
         redirect: {
           destination: '/',
-          permanent: false
-        }
+          permanent: false,
+        },
       }
     }
 
@@ -39,14 +39,14 @@ export function withSSRAuth<P>(
         return {
           redirect: {
             destination: '/',
-            permanent: false
-          }
+            permanent: false,
+          },
         }
       }
 
       const userHasValidPermissions = validateUserPermissions({
         userRoles,
-        roles
+        roles,
       })
 
       if (!userHasValidPermissions) {
@@ -54,8 +54,8 @@ export function withSSRAuth<P>(
           // notFound: true,
           redirect: {
             destination: '/dashboard',
-            permanent: false
-          }
+            permanent: false,
+          },
         }
       }
     }
@@ -64,15 +64,15 @@ export function withSSRAuth<P>(
       return await fn(ctx)
     } catch (err) {
       if (err instanceof AuthTokenError) {
-        destroyCookie(ctx, 'doesangue.nextauth.token')
-        destroyCookie(ctx, 'doesangue.nextauth.refreshToken')
-        destroyCookie(ctx, 'doesangue.nextauth.user')
+        destroyCookie(ctx, 'inventory-control.nextauth.token')
+        destroyCookie(ctx, 'inventory-control.nextauth.refreshToken')
+        destroyCookie(ctx, 'inventory-control.nextauth.user')
 
         return {
           redirect: {
             destination: '/',
-            permanent: false
-          }
+            permanent: false,
+          },
         }
       }
     }

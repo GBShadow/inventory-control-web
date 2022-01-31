@@ -12,7 +12,11 @@ $component-name: 'c-input';
   }
 
   &__label + &__block {
-    margin-top: 1.6rem;
+    margin-top: 0.8rem;
+  }
+
+  &__label {
+    font: $regular-small;
   }
 
   &__block {
@@ -31,7 +35,7 @@ $component-name: 'c-input';
     }
 
     &:focus-within {
-      border: 1px solid $primary;
+      border: 2px solid $primary;
 
       .#{$component-name}__icon-button {
         color: $primary;
@@ -39,7 +43,7 @@ $component-name: 'c-input';
     }
 
     &:hover {
-      border: 1px solid $primary;
+      border: 2px solid $primary;
     }
 
     input {

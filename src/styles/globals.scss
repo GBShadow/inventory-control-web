@@ -1,6 +1,6 @@
 $width: 1200px;
 $primary: #7380ec;
-$primary-variant: #111e88;
+$primary-variant: #2f3eca;
 $white: #fff;
 $gradient-color-01: #2f3eca;
 $gradient-color-02: #7380ec;
@@ -15,7 +15,7 @@ $shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 $regular-small: 400 1.4rem 'Montserrat', sans-serif;
 $regular-medium: 400 1.6rem 'Montserrat', sans-serif;
 $bold-small: 700 1.6rem 'Montserrat', sans-serif;
-$bold-medium: 700 1.8rem 'Montserrat', sans-serif;
+$bold-medium: 700 2rem 'Montserrat', sans-serif;
 $bold-large: 700 3.2rem 'Montserrat', sans-serif;
 $border-radius: 20px;
 
@@ -69,9 +69,13 @@ input:-webkit-autofill {
 
 @import './scss/layouts/l-session';
 @import './scss/layouts/l-form-session';
+@import './scss/layouts/l-dashboard';
+@import './scss/layouts/l-header';
+@import './scss/layouts/l-sidebar';
 
 @import './scss/components/c-button';
 @import './scss/components/c-input';
 @import './scss/components/c-login';
 @import './scss/components/c-loading';
 @import './scss/components/c-create-user';
+@import './scss/components/c-modal';
