@@ -1,6 +1,6 @@
 import { SVGProps } from 'react'
 
-const SvgArrowDown = (props: SVGProps<SVGSVGElement>) => (
+const ArrowDown = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width='1em'
     height='1em'
@@ -16,4 +16,4 @@ const SvgArrowDown = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-export default SvgArrowDown
+export default ArrowDown

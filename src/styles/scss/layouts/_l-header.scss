@@ -7,31 +7,28 @@ $component-name: 'l-header';
   padding: 0 3.2rem;
   height: 7.2rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 
-  // &__logo {
-  //   padding: 1.6rem 2.4rem;
-  //   color: $primary;
-  //   background-color: $white;
-  //   border-radius: $border-radius;
-  //   font: $bold-small;
-  //   border: 2px solid transparent;
+  &__menu {
+    height: 3.2rem;
+    font-size: 3.2rem;
+    color: $white;
 
-  //   &:hover {
-  //     color: $white;
-  //     background-color: $primary;
-  //     border: 2px solid $white;
-  //   }
-  // }
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 
   &__dropdown {
     position: relative;
   }
 
   &__dropdown-button {
+    min-width: 24rem;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 1.6rem;
     color: $white;
     padding: 0 1.6rem;
@@ -46,7 +43,7 @@ $component-name: 'l-header';
     position: absolute;
     background-color: $primary;
     border-radius: 0 0 $border-radius $border-radius;
-    top: calc(100% + 3rem);
+    top: calc(100% + 2rem);
     padding: 1.6rem 0;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
   }

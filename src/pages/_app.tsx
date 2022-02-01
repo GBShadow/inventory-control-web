@@ -1,11 +1,14 @@
 import { AuthProvider } from 'context/auth'
+import { MenuProvider } from 'context/sidebar'
 import type { AppProps } from 'next/app'
 import '../styles/globals.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <MenuProvider>
+        <Component {...pageProps} />
+      </MenuProvider>
     </AuthProvider>
   )
 }

@@ -4,9 +4,10 @@ $component-name: 'l-dashboard';
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template: auto 1fr / 26rem 1fr;
+  grid-template: auto 1fr / auto 1fr;
 
-  .u-close-sidebar {
-    grid-template: auto 1fr / auto 1fr;
+  &__content {
+    padding: 3.2rem;
+    overflow: auto;
   }
 }

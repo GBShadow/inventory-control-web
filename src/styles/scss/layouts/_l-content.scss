@@ -1,0 +1,20 @@
+$component-name: 'l-content';
+
+.#{$component-name} {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  max-width: 1440px;
+  overflow-y: auto;
+
+  &__title {
+    font: $bold-large;
+    color: $dark;
+  }
+
+  &__box {
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: 2.4rem;
+  }
+}

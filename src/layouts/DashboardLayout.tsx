@@ -1,5 +1,6 @@
 import Header from 'components/Header'
 import Sidebar from 'components/Sidebar'
+import { useMenu } from 'hooks/useMenu'
 import React, { ReactNode } from 'react'
 
 type DashboardLayoutProps = {

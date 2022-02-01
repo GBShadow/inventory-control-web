@@ -1,0 +1,64 @@
+$component-name: 'c-modal-edit';
+
+.#{$component-name} {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  background-color: $white;
+  padding: 4rem;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  align-items: center;
+  width: 36rem;
+
+  &__close {
+    position: absolute;
+    top: 2.4rem;
+    right: 2.4rem;
+    font-size: 2.4rem;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__title {
+    font: $bold-medium;
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  &__error {
+    color: $error;
+    font-weight: bold;
+  }
+
+  &__success {
+    font-weight: bold;
+    color: $success;
+  }
+
+  .c-button {
+    margin-top: 1.6rem;
+  }
+}

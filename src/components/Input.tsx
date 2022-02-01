@@ -4,6 +4,7 @@ import {
   useCallback,
   useRef,
   useState,
+  FormEvent,
 } from 'react'
 import EyeOff from 'assets/icons/EyeOff'
 import EyeOn from 'assets/icons/EyeOn'
@@ -11,12 +12,14 @@ import EyeOn from 'assets/icons/EyeOn'
 type InputProps = {
   name: string
   label?: string
-  icon?: ReactNode
+  iconStart?: ReactNode
+  iconEnd?: ReactNode
   span?: number
   register?: any
   textarea?: boolean
   checkbox?: boolean
   password?: boolean
+  typeNumber?: boolean
   error?: boolean
   helperText?: string
   containerClass?: string
@@ -30,7 +33,9 @@ export default function Input({
   register,
   checkbox,
   password,
-  icon,
+  typeNumber,
+  iconStart,
+  iconEnd,
   error,
   helperText,
   editBlock,
@@ -44,24 +49,39 @@ export default function Input({
     setIsFilled(!!inputRef.current?.value)
   }, [])
 
+  const handleKeyUp = useCallback(
+    (event: FormEvent<HTMLInputElement>) => {
+      if (typeNumber) {
+        let { value } = event.currentTarget
+
+        value = value.replace(/\D/g, '')
+
+        event.currentTarget.value = value
+      }
+    },
+    [typeNumber]
+  )
+
   return (
     <div className='c-input'>
       {label && <label className='c-input__label'>{label}</label>}
       <div className='c-input__block'>
+        {iconStart}
         <input
           name={name}
           type={password ? (!onIcon ? 'text' : 'password') : 'text'}
           ref={inputRef}
           onBlur={handleInputBlur}
+          onKeyUp={handleKeyUp}
           {...register}
           {...rest}
         />
-        {icon
-          ? icon
+        {iconEnd
+          ? iconEnd
           : password && (
               <button
                 type='button'
-                className='c-input__icon-button'
+                className={`c-input__icon-button ${isFilled && 'u-filled'}`}
                 onClick={() => setOnIcon(!onIcon)}
               >
                 {onIcon ? <EyeOn /> : <EyeOff />}

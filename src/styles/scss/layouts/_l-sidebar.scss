@@ -6,26 +6,50 @@ $component-name: 'l-sidebar';
   grid-template-rows: 7.2rem 1fr;
   background-color: $primary;
   padding-left: 2.4rem;
+  box-shadow: $shadow2;
 
   &__logo-container {
-    display: grid;
-    place-items: center;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    padding-left: 1.6rem;
+    color: $white;
+    font: $bold-small;
+  }
+
+  &__logo {
+    font-size: 3.2rem;
   }
 
   &__menu {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
   }
 
-  .active {
+  &.u-open {
+    width: 22rem;
+  }
+
+  &.u-close {
+    width: 8.4rem;
+
+    .#{$component-name}__link {
+      padding-right: 1.6rem;
+    }
+  }
+
+  .u-active {
     color: $primary;
     background-color: $white;
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
   }
 
-  a {
+  &__link {
+    display: flex;
+    gap: 1.6rem;
     font: $bold-small;
     padding: 1.6rem 2.4rem;
     color: $white;
@@ -36,5 +60,10 @@ $component-name: 'l-sidebar';
       color: $primary;
       background-color: $white;
     }
+  }
+
+  &__icon {
+    font-size: 1.8rem;
+    transition: all 0.02s;
   }
 }

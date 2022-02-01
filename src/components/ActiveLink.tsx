@@ -19,11 +19,13 @@ const ActiveLink = ({
       ? activeClassName
       : ''
 
-  console.log(
-    <Link {...rest}>{React.cloneElement(children, { className })}</Link>
+  return (
+    <Link {...rest}>
+      {React.cloneElement(children, {
+        className: `${className} ${children.props.className}`,
+      })}
+    </Link>
   )
-
-  return <Link {...rest}>{React.cloneElement(children, { className })}</Link>
 }
 
 export default ActiveLink

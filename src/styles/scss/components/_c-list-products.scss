@@ -1,0 +1,40 @@
+$component-name: 'c-list-products';
+
+.#{$component-name} {
+  &__header {
+    display: flex;
+    gap: 3.2rem;
+  }
+
+  &__container {
+    margin-top: 3.2rem;
+  }
+
+  &__head {
+    border-radius: $border-radius;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid $info-light;
+    color: $dark-variant;
+  }
+
+  &__head,
+  &__item {
+    padding: 1.6rem;
+    display: grid;
+    grid-template-columns: 1fr 6rem;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(16rem, 1fr));
+    cursor: pointer;
+  }
+
+  &__item + &__item {
+    border-top: 1px solid $info-light;
+  }
+
+  .u-padding {
+    padding-left: 4rem;
+  }
+}

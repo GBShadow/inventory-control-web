@@ -21,6 +21,8 @@ $component-name: 'c-input';
 
   &__block {
     display: flex;
+    align-items: center;
+    gap: 0.8rem;
     padding: 1.3rem 1.6rem;
     border-radius: $border-radius;
     border: 1px solid $dark-variant;
@@ -46,8 +48,12 @@ $component-name: 'c-input';
       border: 2px solid $primary;
     }
 
+    .c-icon {
+      font-size: 2rem;
+    }
+
     input {
-      font: $regular-small;
+      font: $regular-medium;
       width: 100%;
       background-color: $white;
     }

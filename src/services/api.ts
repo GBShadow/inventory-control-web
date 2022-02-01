@@ -12,8 +12,8 @@ export function setupAPIClient(ctx = undefined) {
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
-      Authorization: `Bearer ${cookies['doesangue.nextauth.token']}`
-    }
+      Authorization: `Bearer ${cookies['inventory-control.nextauth.token']}`,
+    },
   })
 
   api.interceptors.response.use(
@@ -25,32 +25,33 @@ export function setupAPIClient(ctx = undefined) {
         if (error.response.data?.code === 'token.expired') {
           cookies = parseCookies(ctx)
 
-          const { 'doesangue.nextauth.refreshToken': refreshToken } = cookies
+          const { 'inventory-control.nextauth.refreshToken': refreshToken } =
+            cookies
           const originalConfig = error.config
 
           if (!isRefreshing) {
             isRefreshing = true
             api
               .post('/refresh-token', {
-                refresh_token: refreshToken
+                refresh_token: refreshToken,
               })
               .then(response => {
                 const { refresh_token, token } = response.data
 
                 console.log({ refresh_token, token })
 
-                setCookie(ctx, 'doesangue.nextauth.token', token, {
+                setCookie(ctx, 'inventory-control.nextauth.token', token, {
                   maxAge: 60 * 60 * 24,
-                  path: '/'
+                  path: '/',
                 })
 
                 setCookie(
                   ctx,
-                  'doesangue.nextauth.refreshToken',
+                  'inventory-control.nextauth.refreshToken',
                   refresh_token,
                   {
                     maxAge: 60 * 60 * 24,
-                    path: '/'
+                    path: '/',
                   }
                 )
 
@@ -81,7 +82,7 @@ export function setupAPIClient(ctx = undefined) {
               },
               onFailure: (err: AxiosError) => {
                 reject(err)
-              }
+              },
             })
           })
         } else {

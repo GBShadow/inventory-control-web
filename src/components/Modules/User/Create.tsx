@@ -7,7 +7,7 @@ import Loading from 'components/Loading'
 import Link from 'next/link'
 import Image from 'next/image'
 import { api } from 'services/apiClient'
-import Modal, { ModalHandles } from 'components/Modal'
+import Modal, { ModalHandles } from 'components/Modals/Modal'
 // import schema from './schema'
 
 type IUserCreate = {

@@ -5,6 +5,7 @@ $white: #fff;
 $gradient-color-01: #2f3eca;
 $gradient-color-02: #7380ec;
 $error: #ff7782;
+$success: #77dd77;
 $info-dark: #7d8da1;
 $info-light: #dce1eb;
 $dark: #363949;
@@ -12,6 +13,7 @@ $dark-variant: #677483;
 $light: #848bc82e;
 $background: #f6f6f9;
 $shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+$shadow2: 0px 0px 20px rgba(0, 0, 0, 0.2);
 $regular-small: 400 1.4rem 'Montserrat', sans-serif;
 $regular-medium: 400 1.6rem 'Montserrat', sans-serif;
 $bold-small: 700 1.6rem 'Montserrat', sans-serif;
@@ -61,7 +63,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active,
 input:-webkit-autofill {
-  font: $regular-small;
+  font: $regular-medium;
   color: $dark;
   background: transparent;
   -webkit-box-shadow: 0 0 0 30px $white inset !important;
@@ -72,10 +74,15 @@ input:-webkit-autofill {
 @import './scss/layouts/l-dashboard';
 @import './scss/layouts/l-header';
 @import './scss/layouts/l-sidebar';
+@import './scss/layouts/l-content';
 
 @import './scss/components/c-button';
 @import './scss/components/c-input';
 @import './scss/components/c-login';
 @import './scss/components/c-loading';
-@import './scss/components/c-create-user';
 @import './scss/components/c-modal';
+@import './scss/components/c-modal-create';
+@import './scss/components/c-modal-edit';
+@import './scss/components/c-modal-show';
+@import './scss/components/c-create-user';
+@import './scss/components/c-list-products';

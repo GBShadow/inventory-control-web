@@ -4,6 +4,7 @@ $component-name: 'c-loading';
   display: block;
   width: 100%;
   height: 4rem;
+  color: $primary;
   animation: rotate 1.2s linear infinite;
 
   @keyframes rotate {
