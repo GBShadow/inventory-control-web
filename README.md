@@ -1,4 +1,4 @@
-# Inventory Control API
+# Inventory Control WEB
 
 ## Instruções
 
