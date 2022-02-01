@@ -3,12 +3,15 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from 'next'
-import decode from 'jwt-decode'
 import { destroyCookie, parseCookies } from 'nookies'
 import { AuthTokenError } from '../services/errors/AuthTokenError'
 import validateUserPermissions from './validateUserPermissions'
 
 type withSSRAuthOptions = {
+  roles: string[]
+}
+
+type User = {
   roles: string[]
 }
 
@@ -21,6 +24,7 @@ export function withSSRAuth<P>(
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx)
     const token = cookies['inventory-control.nextauth.token']
+    const userCookie = cookies['inventory-control.nextauth.user']
 
     if (!token) {
       return {
@@ -32,20 +36,20 @@ export function withSSRAuth<P>(
     }
 
     if (options) {
-      const userRoles = decode<{ roles: string[] }>(token)
+      const user: User = JSON.parse(userCookie)
       const { roles } = options
 
-      if (!userRoles) {
+      if (!user.roles) {
         return {
           redirect: {
-            destination: '/',
+            destination: '/produtos',
             permanent: false,
           },
         }
       }
 
       const userHasValidPermissions = validateUserPermissions({
-        userRoles,
+        userRoles: user,
         roles,
       })
 
@@ -53,7 +57,7 @@ export function withSSRAuth<P>(
         return {
           // notFound: true,
           redirect: {
-            destination: '/dashboard',
+            destination: '/produtos',
             permanent: false,
           },
         }

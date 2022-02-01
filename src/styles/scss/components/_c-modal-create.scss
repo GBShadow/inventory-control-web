@@ -11,6 +11,7 @@ $component-name: 'c-modal-create';
   box-shadow: $shadow;
   align-items: center;
   width: 36rem;
+  max-height: 95vh;
 
   &__close {
     position: absolute;
@@ -46,6 +47,12 @@ $component-name: 'c-modal-create';
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
+    overflow: auto;
+    padding: 0.8rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__error {

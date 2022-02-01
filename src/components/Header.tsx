@@ -22,7 +22,7 @@ export default function Header() {
           className='l-header__dropdown-button'
           onClick={() => setIsOpen(!isOpen)}
         >
-          <p>{user?.email}</p>
+          <p>{user?.username}</p>
           <SvgArrowDown />
         </button>
 

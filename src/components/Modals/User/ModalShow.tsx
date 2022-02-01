@@ -11,27 +11,28 @@ import Button from 'components/Button'
 import Input from 'components/Input'
 import Loading from 'components/Loading'
 import { api } from 'services/apiClient'
-import schema from 'schema/create-product.schema'
+import schema from 'schema/user-update.schema'
 import Close from 'assets/icons/Close'
 
-interface ModalShowProps {
+type ModalShowUserProps = {
   reload: (data: boolean) => void
 }
 
-export interface ModalShowHandles {
-  openModalShow: (id: number) => void
+export type ModalShowUserHandles = {
+  openModalShowUser: (id: number) => void
 }
 
-const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
-  { reload },
-  ref
-) => {
+const ModalShowUser: ForwardRefRenderFunction<
+  ModalShowUserHandles,
+  ModalShowUserProps
+> = ({ reload }, ref) => {
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
   const [edit, setEdit] = useState(false)
-  const [productId, setProductId] = useState<number>()
+  const [message, setMessage] = useState('')
+  const [userId, setUserId] = useState<number>()
 
   const {
     setValue,
@@ -42,23 +43,23 @@ const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
     resolver: yupResolver(schema),
   })
 
-  const openModalShow = useCallback(
+  const openModalShowUser = useCallback(
     async (id: number) => {
       setVisible(true)
 
-      const { data } = await api.get(`/products/${id}`)
-      setProductId(data.id)
+      const { data } = await api.get(`/users/${id}`)
+      setUserId(data.id)
 
       setValue('name', data.name)
-      setValue('value', data.value)
-      setValue('quantity', data.quantity)
+      setValue('surname', data.surname)
+      setValue('username', data.username)
     },
     [setValue]
   )
 
   useImperativeHandle(ref, () => {
     return {
-      openModalShow,
+      openModalShowUser,
     }
   })
 
@@ -67,20 +68,17 @@ const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
     setEdit(false)
   }
 
-  const onSubmit = async data => {
+  const handleDelete = async () => {
     try {
       setSuccess(false)
       setError(false)
       setLoading(true)
 
-      await api.put(`/products/${productId}`, {
-        name: data.name,
-        value: parseFloat(data.value.replace(',', '.')),
-        quantity: Number(data.quantity),
-      })
+      await api.delete(`/users/${userId}`)
 
       setSuccess(true)
       setLoading(false)
+      setMessage('Usuário apagado com sucesso.')
 
       setTimeout(() => {
         reload(true)
@@ -89,7 +87,37 @@ const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
         setSuccess(false)
       }, 2000)
     } catch {
+      setMessage('Não foi possível apagar o usuário.')
       setError(true)
+    }
+  }
+
+  const onSubmit = async data => {
+    try {
+      setSuccess(false)
+      setError(false)
+      setLoading(true)
+
+      await api.put(`/users/${userId}`, {
+        name: data.name,
+        surname: data.surname,
+        username: data.username,
+      })
+
+      setSuccess(true)
+      setLoading(false)
+      setMessage('Produto editado com sucesso.')
+
+      setTimeout(() => {
+        reload(true)
+        setEdit(false)
+        setVisible(false)
+        setSuccess(false)
+      }, 2000)
+    } catch {
+      setMessage('Não foi possível editar o usuário.')
+      setError(true)
+      setLoading(false)
     }
   }
 
@@ -104,39 +132,38 @@ const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
           <Close />
         </button>
         <h1 className='c-modal-show__title'>
-          {!edit ? 'Detalhes do Produto' : 'Editar Produto'}
+          {!edit ? 'Detalhes do Usuário' : 'Editar Usuário'}
         </h1>
         <form className='c-modal-show__form' onSubmit={handleSubmit(onSubmit)}>
           <Input
             name='name'
+            label='Nome'
             placeholder='Nome'
-            label={!edit && 'Nome'}
             register={register('name', {
-              disabled: edit ? false : true,
+              disabled: !edit ? true : false,
             })}
             error={!!errors.name}
             helperText={errors.name?.message}
           />
           <Input
-            name='value'
-            placeholder='Valor'
-            label={!edit && 'Valor'}
-            register={register('value', {
-              disabled: edit ? false : true,
+            name='surname'
+            label='Sobrenome'
+            placeholder='Sobrenome'
+            register={register('surname', {
+              disabled: !edit ? true : false,
             })}
-            error={!!errors.value}
-            helperText={errors.value?.message}
+            error={!!errors.surname}
+            helperText={errors.surname?.message}
           />
           <Input
-            name='quantity'
-            placeholder='Quantidade'
-            label={!edit && 'Quantidade'}
-            register={register('quantity', {
-              disabled: edit ? false : true,
+            name='username'
+            label='Username'
+            placeholder='Username'
+            register={register('username', {
+              disabled: !edit ? true : false,
             })}
-            typeNumber
-            error={!!errors.quantity}
-            helperText={errors.quantity?.message}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
 
           {edit ? (
@@ -149,26 +176,16 @@ const ModalShow: ForwardRefRenderFunction<ModalShowHandles, ModalShowProps> = (
             )
           ) : (
             <div className='c-modal-show__button-container'>
-              <Button type='submit' onClick={() => setEdit(true)}>
-                Editar
-              </Button>
-              <Button type='submit' onClick={() => {}}>
-                Excluir
-              </Button>
+              <Button onClick={() => setEdit(true)}>Editar</Button>
+              <Button onClick={handleDelete}>Excluir</Button>
             </div>
           )}
         </form>
-        {success && (
-          <p className='c-modal-show__success'>Produto editado com sucesso.</p>
-        )}
-        {error && (
-          <p className='c-modal-show__error'>
-            Não foi possível editar o produto.
-          </p>
-        )}
+        {success && <p className='c-modal-show__success'>{message}</p>}
+        {error && <p className='c-modal-show__error'>{message}</p>}
       </div>
     </div>
   )
 }
 
-export default forwardRef(ModalShow)
+export default forwardRef(ModalShowUser)

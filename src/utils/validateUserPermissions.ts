@@ -9,7 +9,7 @@ type ValidateUserPermissionsParams = {
 
 export default function validateUserPermissions({
   userRoles,
-  roles
+  roles,
 }: ValidateUserPermissionsParams) {
   if (userRoles.roles.length === 0) {
     return false

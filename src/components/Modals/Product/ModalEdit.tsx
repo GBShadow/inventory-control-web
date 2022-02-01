@@ -11,21 +11,21 @@ import Button from 'components/Button'
 import Input from 'components/Input'
 import Loading from 'components/Loading'
 import { api } from 'services/apiClient'
-import schema from 'schema/create-product.schema'
+import schema from 'schema/product.schema'
 import Close from 'assets/icons/Close'
 
-interface ModalEditProps {
+type ModalEditProductProps = {
   reload: (data: boolean) => void
 }
 
-export interface ModalEditHandles {
-  openModalEdit: (id: number) => void
+export type ModalEditProductHandles = {
+  openModalEditProduct: (id: number) => void
 }
 
-const ModalEdit: ForwardRefRenderFunction<ModalEditHandles, ModalEditProps> = (
-  { reload },
-  ref
-) => {
+const ModalEditProduct: ForwardRefRenderFunction<
+  ModalEditProductHandles,
+  ModalEditProductProps
+> = ({ reload }, ref) => {
   const [visible, setVisible] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -41,7 +41,7 @@ const ModalEdit: ForwardRefRenderFunction<ModalEditHandles, ModalEditProps> = (
     resolver: yupResolver(schema),
   })
 
-  const openModalEdit = useCallback(
+  const openModalEditProduct = useCallback(
     async (id: number) => {
       setVisible(true)
 
@@ -57,7 +57,7 @@ const ModalEdit: ForwardRefRenderFunction<ModalEditHandles, ModalEditProps> = (
 
   useImperativeHandle(ref, () => {
     return {
-      openModalEdit,
+      openModalEditProduct,
     }
   })
 
@@ -83,6 +83,7 @@ const ModalEdit: ForwardRefRenderFunction<ModalEditHandles, ModalEditProps> = (
       }, 2000)
     } catch {
       setError(true)
+      setLoading(false)
     }
   }
 
@@ -144,4 +145,4 @@ const ModalEdit: ForwardRefRenderFunction<ModalEditHandles, ModalEditProps> = (
   )
 }
 
-export default forwardRef(ModalEdit)
+export default forwardRef(ModalEditProduct)

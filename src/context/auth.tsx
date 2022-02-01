@@ -5,11 +5,12 @@ import { api } from '../services/apiClient'
 
 type User = {
   name: string
-  email: string
+  username: string
+  roles: string[]
 }
 
 type SignCredentials = {
-  email: string
+  username: string
   password: string
 }
 
@@ -28,7 +29,6 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function signOutServerSide() {
   destroyCookie(undefined, 'inventory-control.nextauth.token')
-  // destroyCookie(undefined, 'inventory-control.nextauth.refreshToken')
   destroyCookie(undefined, 'inventory-control.nextauth.user')
 
   Router.replace('/')
@@ -51,38 +51,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function signOut() {
     destroyCookie(undefined, 'inventory-control.nextauth.user')
     destroyCookie(undefined, 'inventory-control.nextauth.token')
-    // destroyCookie(undefined, 'inventory-control.nextauth.refreshToken')
 
     Router.replace('/')
   }
 
-  async function signIn({ email, password }: SignCredentials) {
+  async function signIn({ username, password }: SignCredentials) {
     try {
       const { data } = await api.post('/sessions', {
-        email,
+        username,
         password,
       })
 
-      const { token, refresh_token, user } = data
+      const { token, user } = data
 
       setCookie(undefined, 'inventory-control.nextauth.token', token, {
         maxAge: 60 * 60 * 24,
         path: '/',
       })
 
-      // setCookie(
-      //   undefined,
-      //   'inventory-control.nextauth.refreshToken',
-      //   refresh_token,
-      //   {
-      //     maxAge: 60 * 60 * 24,
-      //     path: '/',
-      //   }
-      // )
-
       const userData = {
         name: user.name,
-        email: user.email,
+        username: user.username,
+        roles: user.roles,
       }
 
       setCookie(

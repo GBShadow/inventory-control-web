@@ -6,11 +6,17 @@ import Close from 'assets/icons/Close'
 import Search from 'assets/icons/Search'
 import Button from 'components/Button'
 import Edit from 'assets/icons/Edit'
-import ModalCreate, { ModalCreateHandles } from 'components/Modals/ModalCreate'
-import ModalEdit, { ModalEditHandles } from 'components/Modals/ModalEdit'
+import ModalCreateProduct, {
+  ModalCreateProductHandles,
+} from 'components/Modals/Product/ModalCreate'
+import ModalEditProduct, {
+  ModalEditProductHandles,
+} from 'components/Modals/Product/ModalEdit'
 import { formatValue } from 'utils/formatValue'
 import normalizedText from 'utils/normalized'
-import ModalShow, { ModalShowHandles } from 'components/Modals/ModalShow'
+import ModalShowProduct, {
+  ModalShowProductHandles,
+} from 'components/Modals/Product/ModalShow'
 
 type Product = {
   id: number
@@ -20,9 +26,9 @@ type Product = {
 }
 
 export default function ProductList() {
-  const modalCreateRef = useRef<ModalCreateHandles>(null)
-  const modalEditRef = useRef<ModalEditHandles>(null)
-  const modalShowRef = useRef<ModalShowHandles>(null)
+  const modalCreateRef = useRef<ModalCreateProductHandles>(null)
+  const modalEditRef = useRef<ModalEditProductHandles>(null)
+  const modalShowRef = useRef<ModalShowProductHandles>(null)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -49,18 +55,8 @@ export default function ProductList() {
           value: formatValue(product.value),
         }))
 
-        setProducts([
-          ...productsSerialized,
-          ...productsSerialized,
-          ...productsSerialized,
-          ...productsSerialized,
-        ])
-        setFilterData([
-          ...productsSerialized,
-          ...productsSerialized,
-          ...productsSerialized,
-          ...productsSerialized,
-        ])
+        setProducts(productsSerialized)
+        setFilterData(productsSerialized)
       } catch {
         setError(true)
       } finally {
@@ -105,7 +101,9 @@ export default function ProductList() {
               )
             }
           />
-          <Button onClick={() => modalCreateRef.current?.openModalCreate()}>
+          <Button
+            onClick={() => modalCreateRef.current?.openModalCreateProduct()}
+          >
             Novo produto
           </Button>
         </header>
@@ -113,7 +111,7 @@ export default function ProductList() {
         <div className='c-list-products__container'>
           <div className='c-list-products__head'>
             <div className='c-list-products__row'>
-              <strong>Name</strong>
+              <strong>Nome</strong>
               <strong>Valor</strong>
               <strong>Quantidade</strong>
             </div>
@@ -125,7 +123,7 @@ export default function ProductList() {
                 <div
                   className='c-list-products__row'
                   onClick={() =>
-                    modalShowRef.current?.openModalShow(product.id)
+                    modalShowRef.current?.openModalShowProduct(product.id)
                   }
                 >
                   <p>{product.name}</p>
@@ -135,7 +133,7 @@ export default function ProductList() {
                 <button
                   type='button'
                   onClick={() =>
-                    modalEditRef.current?.openModalEdit(product.id)
+                    modalEditRef.current?.openModalEditProduct(product.id)
                   }
                 >
                   <Edit />
@@ -145,9 +143,9 @@ export default function ProductList() {
           </div>
         </div>
       </div>
-      <ModalShow ref={modalShowRef} reload={setReload} />
-      <ModalEdit ref={modalEditRef} reload={setReload} />
-      <ModalCreate ref={modalCreateRef} />
+      <ModalShowProduct ref={modalShowRef} reload={setReload} />
+      <ModalEditProduct ref={modalEditRef} reload={setReload} />
+      <ModalCreateProduct ref={modalCreateRef} reload={setReload} />
     </>
   )
 }

@@ -5,17 +5,16 @@ import Input from 'components/Input'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import Link from 'next/link'
-import Image from 'next/image'
 import { api } from 'services/apiClient'
 import Modal, { ModalHandles } from 'components/Modals/Modal'
-// import schema from './schema'
+import schema from 'schema/user-create.schema'
 
 type IUserCreate = {
   name: string
-  email: string
-  phone: string
+  surname: string
+  username: string
   password: string
-  password_confirm: string
+  confirm_password: string
 }
 
 export default function UserCreate() {
@@ -24,7 +23,7 @@ export default function UserCreate() {
     handleSubmit,
     formState: { errors },
   } = useForm<IUserCreate>({
-    // resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   })
 
   const modalRef = useRef<ModalHandles>(null)
@@ -40,9 +39,10 @@ export default function UserCreate() {
 
       await api.post('/users', {
         name: data.name,
-        email: data.email,
-        phone: data.phone,
+        surname: data.surname,
+        username: data.username,
         password: data.password,
+        roles: ['USER'],
       })
       setMessage('Usuário criado com sucesso! Você já pode fazer o login.')
       setError(false)
@@ -68,20 +68,20 @@ export default function UserCreate() {
           helperText={errors.name?.message}
         />
         <Input
-          name='email'
-          label='E-mail'
-          placeholder='E-mail'
-          register={register('email')}
-          error={!!errors.email}
-          helperText={errors.email?.message}
+          name='surname'
+          label='Sobrenome'
+          placeholder='Sobrenome'
+          register={register('surname')}
+          error={!!errors.surname}
+          helperText={errors.surname?.message}
         />
         <Input
-          name='phone'
-          label='Telefone / Celular'
-          placeholder='Telefone / Celular'
-          register={register('phone')}
-          error={!!errors.phone}
-          helperText={errors.phone?.message}
+          name='username'
+          label='Username'
+          placeholder='Username'
+          register={register('username')}
+          error={!!errors.username}
+          helperText={errors.username?.message}
         />
         <Input
           name='password'
@@ -93,15 +93,14 @@ export default function UserCreate() {
           helperText={errors.password?.message}
         />
         <Input
-          name='password_confirm'
-          label='Confirmar senha'
-          placeholder='Confirmar senha'
+          name='confirm_password'
+          label='Confirmação da senha'
+          placeholder='Confirmação da senha'
           password
-          register={register('password_confirm')}
-          error={!!errors.password_confirm}
-          helperText={errors.password_confirm?.message}
+          register={register('confirm_password')}
+          error={!!errors.confirm_password}
+          helperText={errors.confirm_password?.message}
         />
-
         {loading ? (
           <Loading />
         ) : (

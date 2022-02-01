@@ -11,19 +11,21 @@ import Button from 'components/Button'
 import Input from 'components/Input'
 import Loading from 'components/Loading'
 import { api } from 'services/apiClient'
-import schema from 'schema/create-product.schema'
+import schema from 'schema/product.schema'
 import Close from 'assets/icons/Close'
 
-interface ModalCreateProps {}
-
-export interface ModalCreateHandles {
-  openModalCreate: () => void
+type ModalCreateProductProps = {
+  reload: (data: boolean) => void
 }
 
-const ModalCreate: ForwardRefRenderFunction<
-  ModalCreateHandles,
-  ModalCreateProps
-> = ({}, ref) => {
+export type ModalCreateProductHandles = {
+  openModalCreateProduct: () => void
+}
+
+const ModalCreateProduct: ForwardRefRenderFunction<
+  ModalCreateProductHandles,
+  ModalCreateProductProps
+> = ({ reload }, ref) => {
   const {
     register,
     handleSubmit,
@@ -37,13 +39,13 @@ const ModalCreate: ForwardRefRenderFunction<
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const openModalCreate = useCallback(() => {
+  const openModalCreateProduct = useCallback(() => {
     setVisible(true)
   }, [])
 
   useImperativeHandle(ref, () => {
     return {
-      openModalCreate,
+      openModalCreateProduct,
     }
   })
 
@@ -59,14 +61,17 @@ const ModalCreate: ForwardRefRenderFunction<
         quantity: Number(data.quantity),
       })
 
+      setSuccess(true)
       setLoading(false)
 
       setTimeout(() => {
-        setVisible(false)
+        reload(true)
         setSuccess(false)
+        setVisible(false)
       }, 2000)
     } catch {
       setError(true)
+      setLoading(false)
     }
   }
 
@@ -110,7 +115,13 @@ const ModalCreate: ForwardRefRenderFunction<
             error={!!errors.quantity}
             helperText={errors.quantity?.message}
           />
-          {loading ? <Loading /> : <Button type='submit'>Criar</Button>}
+          {loading ? (
+            <Loading />
+          ) : (
+            <Button type='submit' disabled={success}>
+              Criar
+            </Button>
+          )}
         </form>
         {success && (
           <p className='c-modal-create__success'>Produto criado com sucesso.</p>
@@ -125,4 +136,4 @@ const ModalCreate: ForwardRefRenderFunction<
   )
 }
 
-export default forwardRef(ModalCreate)
+export default forwardRef(ModalCreateProduct)

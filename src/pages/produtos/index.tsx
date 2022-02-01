@@ -1,11 +1,15 @@
+import ProductList from 'components/Modules/Product/List'
+import ContentLayout from 'layouts/ContentLayout'
 import DashboardLayout from 'layouts/DashboardLayout'
 import { GetServerSideProps } from 'next'
 import { withSSRAuth } from 'utils/withSSRAuth'
 
-export default function ProductListsPage() {
+export default function ProductListPage() {
   return (
     <DashboardLayout>
-      <div></div>
+      <ContentLayout title='Produtos'>
+        <ProductList />
+      </ContentLayout>
     </DashboardLayout>
   )
 }

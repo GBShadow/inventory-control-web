@@ -6,6 +6,21 @@ $component-name: 'c-login';
   align-items: center;
   gap: 1.6rem;
 
+  &__logo {
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  &__logo-icon {
+    font-size: 6.4rem;
+  }
+
+  &__logo-name {
+    font: $bold-medium;
+  }
+
   &__error {
     color: $error;
   }

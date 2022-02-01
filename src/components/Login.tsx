@@ -5,13 +5,13 @@ import Input from 'components/Input'
 import Button from 'components/Button'
 import { useAuth } from 'hooks/useAuth'
 import Loading from 'components/Loading'
-import Logo from 'assets/icons/Logo'
 import Link from 'next/link'
 import Image from 'next/image'
-// import schema from './schema'
+import schema from 'schema/login.schema'
+import BoxOpen from 'assets/icons/BoxOpen'
 
 type SignCredentials = {
-  email: string
+  username: string
   password: string
 }
 
@@ -21,7 +21,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignCredentials>({
-    // resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   })
 
   const [loading, setLoading] = useState(false)
@@ -44,21 +44,16 @@ export default function Login() {
   return (
     <form className='c-login' onSubmit={handleSubmit(onSubmit)}>
       <div className='c-login__logo'>
-        <Image
-          src='/images/logo.png'
-          width={300}
-          height={72}
-          alt='Logo'
-          objectFit='contain'
-        />
+        <BoxOpen className='c-login__logo-icon' />
+        <h1 className='c-login__logo-name'>Inventory Control</h1>
       </div>
       <Input
-        name='email'
+        name='username'
         label='Login'
         placeholder='Login'
-        register={register('email')}
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        register={register('username')}
+        error={!!errors.username}
+        helperText={errors.username?.message}
       />
       <Input
         name='password'
